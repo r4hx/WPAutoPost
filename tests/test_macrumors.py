@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from neowin import Neowin
+from macrumors import Macrumors
 
 
-class TestNeowinSite(unittest.TestCase):
+class TestMacrumorsSite(unittest.TestCase):
     def test_check_feed(self):
         ...
 
