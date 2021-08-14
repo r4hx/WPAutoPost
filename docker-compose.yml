@@ -1,0 +1,13 @@
+# docker-compose.yml
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: 'WPAutoPost'
+    restart: always
+    command: ["python3", "/app/main.py"]
+    volumes:
+      - .:/app
+    env_file:
+      - ./config.env
