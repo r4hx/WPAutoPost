@@ -15,8 +15,8 @@ logging.basicConfig(
 )
 
 
-post_url = getenv("URL", None)
-assert post_url is not None, "Please set URL"
+url = getenv("URL", None)
+assert url is not None, "Please set URL"
 login = getenv("LOGIN", None)
 assert login is not None, "Please set LOGIN"
 password = getenv("PASSWORD", None)
@@ -27,11 +27,11 @@ if __name__ == "__main__":
     while True:
         n = Neowin()
         m = Macrumors()
+        t = Translate()
+        w = Wordpress(url, login, password)
         adapters = [n, m]
         for a in adapters:
             new_posts_urls = a.get_new_posts()
-            t = Translate()
-            w = Wordpress(post_url, login, password)
             i = 0
             for post_url in new_posts_urls:
                 if i >= 10:
