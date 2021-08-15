@@ -15,8 +15,8 @@ logging.basicConfig(
 )
 
 
-url = getenv("URL", None)
-assert url is not None, "Please set URL"
+post_url = getenv("URL", None)
+assert post_url is not None, "Please set URL"
 login = getenv("LOGIN", None)
 assert login is not None, "Please set LOGIN"
 password = getenv("PASSWORD", None)
@@ -27,17 +27,17 @@ if __name__ == "__main__":
     while True:
         n = Neowin()
         m = Macrumors()
-        t = Translate()
-        w = Wordpress(url, login, password)
         adapters = [n, m]
         for a in adapters:
-            new_posts = a.get_new_posts()
+            new_posts_urls = a.get_new_posts()
+            t = Translate()
+            w = Wordpress(post_url, login, password)
             i = 0
-            for url in new_posts:
+            for post_url in new_posts_urls:
                 if i >= 10:
                     break
                 try:
-                    soup = a.get_context(url)
+                    soup = a.get_context(post_url)
                     title = t.go(a.get_title(soup))
                     description = t.go(a.get_description(soup))
                     image_url = a.get_cover_image(soup)
@@ -54,7 +54,7 @@ if __name__ == "__main__":
                     logging.warning(e)
                     logging.warning(sys.exc_info())
                 finally:
-                    w.save_url_in_cache(url)
+                    w.save_url_in_cache(post_url)
                     i += 1
         logging.info("Sleep 1 hour")
         time.sleep(60 * 60 * 1)
